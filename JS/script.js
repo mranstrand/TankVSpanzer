@@ -25,10 +25,23 @@ function start() {
 }
 
 function update() {
+
+    updatePositions();
     repaint();
+
+}
+
+function updatePositions() {
+
+    p1x += p1vx;
+    p2x += p2vx;
+
 }
 
 function repaint() {
+    //Sudda
+    ctx.clearRect(0, 0, c.width, c.height);
+    //Måla pansar
     paintTank(p1x, p1y);
     paintTank(p2x, p2y);
 }
@@ -37,4 +50,26 @@ function paintTank(x, y) {
 
     ctx.fillRect(x, y, c.width * 0.05, c.height * 0.05);
 
+}
+
+function keyDown(e) {
+    // Förhindra scroll
+    e.preventDefault();
+
+    if (e.keyCode == 37) {
+        // Vänster
+        p2vx = -c.width * 0.001;
+    }
+
+    if (e.keyCode == 39) {
+        //Höger
+        p2vx = c.width * 0.0005;
+    }
+}
+
+function keyUp(e) {
+    if (e.keyCode == 37 || e.keyCode == 39) {
+        // Stanna pl 2
+        p2vx = 0;
+    }
 }

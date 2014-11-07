@@ -4,7 +4,12 @@ var p1x,
     p1vx,
     p2x,
     p2y,
-    p2vx;
+    p2vx,
+    s1x,
+    s1y,
+    s1vx,
+    s1vy,
+    say;
 
 
 function start() {
@@ -20,6 +25,11 @@ function start() {
     p2x = c.width * 0.85;
     p2y = c.height * 0.8;
     p2vx = 0;
+    s1x = 100;
+    s1y = 100;
+    s1vx = 2;
+    s1vy = -3;
+    say = 0.05;
 
     window.setInterval(update, 20);
 }
@@ -35,6 +45,10 @@ function updatePositions() {
 
     p1x += p1vx;
     p2x += p2vx;
+    s1x += s1vx;
+    s1y += s1vy;
+    //Ändra hastighet på skottet.
+    s1vy += say;
 
 }
 
@@ -44,6 +58,8 @@ function repaint() {
     //Måla pansar
     paintTank(p1x, p1y);
     paintTank(p2x, p2y);
+
+    paintShot(s1x, s1y);
 }
 
 function paintTank(x, y) {
@@ -52,9 +68,17 @@ function paintTank(x, y) {
 
 }
 
+function paintShot(x, y) {
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+}
+
 function keyDown(e) {
     // Förhindra scroll
     e.preventDefault();
+    console.log(e.keyCode);
 
     if (e.keyCode == 37) {
         // Vänster
@@ -65,11 +89,26 @@ function keyDown(e) {
         //Höger
         p2vx = c.width * 0.0005;
     }
+
+    if (e.keyCode == 65) {
+        // Vänster
+        p1vx = -c.width * 0.0005;
+    }
+
+    if (e.keyCode == 68) {
+        //Höger
+        p1vx = c.width * 0.001;
+    }
+
 }
 
 function keyUp(e) {
     if (e.keyCode == 37 || e.keyCode == 39) {
         // Stanna pl 2
         p2vx = 0;
+    }
+    if (e.keyCode == 65 || e.keyCode == 68) {
+        // Stanna pl 2
+        p1vx = 0;
     }
 }

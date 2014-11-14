@@ -78,6 +78,7 @@ function paintShot(x, y) {
 function keyDown(e) {
     // Förhindra scroll
     e.preventDefault();
+    
     console.log(e.keyCode);
 
     if (e.keyCode == 37) {
@@ -99,6 +100,11 @@ function keyDown(e) {
         //Höger
         p1vx = c.width * 0.001;
     }
+    if (e.keyCode == 32) {
+        //Space - fire pl1
+       
+    }
+
 
 }
 

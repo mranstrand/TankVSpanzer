@@ -13,7 +13,11 @@ var p1x,
     s2y,
     s2vx,
     s2vy,
-    say;
+    say,
+    f1x = -40,
+    f1y = -40,
+    f2x = -40,
+    f2y = -40;
 
 
 function start() {
@@ -21,6 +25,7 @@ function start() {
     ctx = c.getContext("2d");
 
     tankimg = document.getElementById("tankimg");
+    exploimg = document.getElementById("exploimg");
 
     c.width = window.innerWidth;
     c.height = window.innerHeight;
@@ -64,6 +69,20 @@ function updatePositions() {
     //Ändra hastighet på skottet.
     s2vy += say;
 
+    // Kontrollera om skottet träffar
+    if (s2x > p1x && s2x < p1x + c.width * 0.05 && s2y > p1y && s2y < p1y + c.height * 0.05) {
+
+        f1x = p1x;
+        f1y = p1y;
+
+    }
+    if (s1x > p2x && s1x < p2x + c.width * 0.05 && s1y > p2y && s1y < p2y + c.height * 0.05) {
+
+        f2x = p2x;
+        f2y = p2y;
+
+    }
+
 }
 
 function repaint() {
@@ -75,6 +94,9 @@ function repaint() {
 
     paintShot(s1x, s1y);
     paintShot(s2x, s2y);
+
+    paintFire(f1x, f1y);
+    paintFire(f2x, f2y);
 }
 
 function paintTank(x, y) {
@@ -88,6 +110,13 @@ function paintShot(x, y) {
     ctx.arc(x, y, 3, 0, 2 * Math.PI);
     ctx.fill();
     ctx.closePath();
+}
+
+function paintFire(x, y) {
+
+    ctx.drawImage(exploimg, x, y, c.width * 0.05, c.height * 0.05);
+
+
 }
 
 function keyDown(e) {

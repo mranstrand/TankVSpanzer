@@ -17,7 +17,11 @@ var p1x,
     f1x = -40,
     f1y = -40,
     f2x = -40,
-    f2y = -40;
+    f2y = -40,
+    p1h = 100,
+    p2h = 100,
+    p1l = 3,
+    p2l = 3;
 
 
 function start() {
@@ -75,12 +79,32 @@ function updatePositions() {
         f1x = p1x;
         f1y = p1y;
 
+        // Dra av hälsa
+        p1h -= 30;
+
+        //Flytta skott
+        s2y = c.height;
+
+        if (p1h < 0) {
+            p1h = 100;
+            p1l--;
+        }
     }
     if (s1x > p2x && s1x < p2x + c.width * 0.05 && s1y > p2y && s1y < p2y + c.height * 0.05) {
 
         f2x = p2x;
         f2y = p2y;
 
+        // Dra av hälsa
+        p2h -= 30;
+
+        //Flytta skott
+        s1y = c.height;
+
+        if (p2h < 0) {
+            p2h = 100;
+            p2l--;
+        }
     }
 
 }
@@ -97,6 +121,8 @@ function repaint() {
 
     paintFire(f1x, f1y);
     paintFire(f2x, f2y);
+
+    paintInfo();
 }
 
 function paintTank(x, y) {
@@ -116,7 +142,20 @@ function paintFire(x, y) {
 
     ctx.drawImage(exploimg, x, y, c.width * 0.05, c.height * 0.05);
 
+}
 
+function paintInfo() {
+
+    // Healthbar
+    ctx.fillStyle = "red";
+    ctx.fillRect(50, 50, p1h, 10);
+    ctx.fillRect(c.width - 150, 50, p2h, 10);
+    ctx.fillStyle = "black";
+
+    //Måla ut antal liv
+    for (var i = 0; i < p1l; i++) {
+        paintTank(i * c.width * 0.05, 0);
+    }
 }
 
 function keyDown(e) {
